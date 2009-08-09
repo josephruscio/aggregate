@@ -80,6 +80,10 @@ class SimpleStatsTest < Test::Unit::TestCase
     puts @stats.to_s
   end
 
+  def test_outlier
+    @stats << -1
+    @stats << 2**129
+  end
 end
 
 =begin

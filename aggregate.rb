@@ -11,6 +11,8 @@ class Aggregate
     @count = 0
     @sum = 0.0
     @sum2 = 0.0
+    @outliers_low = 0
+    @outliers_high = 0
 
     # If the user asks we maintain a linear histogram
     if (nil != low && nil != high && nil != width)
