@@ -91,6 +91,7 @@ class Aggregate
 
       # Print the ~ if we skipped some empty buckets
       s += "      ~\n" unless prev_index == x[0] - 1
+      prev_index = x[0]
 
       # Print the bucket
       s += sprintf("%5d |", x[1])
