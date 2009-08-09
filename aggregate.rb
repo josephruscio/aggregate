@@ -2,13 +2,7 @@ class Aggregate
   attr_reader :mean, :count, :max, :min, :sum, :outliers_low, :outliers_high
  
   # By default maintain a logarithmic histogram
-  @@MAX_BUCKETS = 128
-  @buckets
-
-  # If the user asks we maintain a linear histogram
-  @low 
-  @high 
-  @width 
+  @@LOG_BUCKETS = 128
 
   #
   ## Constructor
@@ -18,6 +12,7 @@ class Aggregate
     @sum = 0.0
     @sum2 = 0.0
 
+    # If the user asks we maintain a linear histogram
     if (nil != low && nil != high && nil != width)
       # This is a linear histogram
       if high < low
@@ -29,7 +24,7 @@ class Aggregate
       @width = width
     else
       @low = 1
-      @high = to_bucket(@@MAX_BUCKETS - 1)
+      @high = to_bucket(@@LOG_BUCKETS - 1)
     end
 
     #Initialize all buckets to 0
@@ -143,7 +138,7 @@ class Aggregate
     if linear?
       return (@high-@low)/@width
     else
-      return @@MAX_BUCKETS
+      return @@LOG_BUCKETS
     end
   end
 
