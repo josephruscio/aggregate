@@ -15,7 +15,8 @@ class Aggregate
     @outliers_high = 0
 
     # If the user asks we maintain a linear histogram
-    if (nil != low && nil != high && nil != width)
+    # STILL UNDER TEST/DEV
+    if 0 #(nil != low && nil != high && nil != width)
       # This is a linear histogram
       if high < low
 	raise ArgumentError, "High bucket must be > Low bucket"
