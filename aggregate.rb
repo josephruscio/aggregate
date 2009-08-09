@@ -67,44 +67,55 @@ class Aggregate
   def to_s
 
     #Find the largest bucket and create an array of the rows we intend to print
-    max = 0
+    max_count = 0
     disp_buckets = Array.new
     @buckets.each_with_index do |count, idx|
       next if 0 == count
-
-      max = count if max < count
-
+      max_count = count if max_count < count
       disp_buckets << [idx, to_bucket(idx), count]
     end
 
+    #Figure out how wide the value and count columns need to be based on their
+    #largest respective numbers
+    value_width = [disp_buckets.last[1].to_s.length, "value".length].max
+    count_width = [max_count.to_s.length, "count".length].max
+    max_bar_width  = 80 - (value_width + " |".length + " ".length + count_width)
+
     #print the header
-    range = "----------------------------------------------------------------"
-    s = "\nvalue |" + range + " count\n"
+    header = sprintf("%#{value_width}s", "value")
+    header += " |"
+    max_bar_width.times { header += "-"}
+    header += " count"
 
     #Determine the value of a '@'
-    weight = max/range.length
-    weight = 1 if weight == 0
+    weight = [max_count.to_f/max_bar_width.to_f, 1.0].max
 
     #Loop through each bucket to be displayed and output the correct number
+    histogram = ""
     prev_index = disp_buckets[0][0] - 1
     disp_buckets.each do |x|
 
-      # Print the ~ if we skipped some empty buckets
-      s += "      ~\n" unless prev_index == x[0] - 1
+      #Denote skipped empty buckets with a ~
+      histogram += "      ~\n" unless prev_index == x[0] - 1
       prev_index = x[0]
 
-      # Print the bucket
-      s += sprintf("%5d |", x[1])
+      #Add the value
+      row = sprintf("%#{value_width}d |", x[1])
 
-      #print the count
-      i = (x[2]/weight)
-      i.times { s += "@"}
-      (range.length - i).times { s += " " }
+      #Add the bar
+      bar_size = (x[2]/weight).to_i
+      bar_size.times { row += "@"}
+      (max_bar_width - bar_size).times { row += " " }
 
-      s += sprintf("%7d\n", x[2])
+      #Add the count
+      row += sprintf(" %#{count_width}d\n", x[2])
+
+      #Append the finished row onto the histogram
+      histogram += row
     end
 
-    s
+    #Put the pieces together
+    "\n" + header + "\n" + histogram 
   end
   
   #Histogram data can also be accessed through iterators
