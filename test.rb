@@ -58,6 +58,19 @@ class SimpleStatsTest < Test::Unit::TestCase
     assert_equal total_bucket_sum, @@DATA.length
   end
 
+=begin
+  def test_addition
+    stats1 = Aggregate.new
+    stats2 = Aggregate.new
+
+    stats1 << 1
+    stats2 << 3
+
+    stats_sum = stats1 + stats2
+
+    assert_equal stats_sum.count, stats1.count + stats2.count
+  end
+=end
 
   #XXX: Update test_bucket_contents() if you muck with @@DATA
   @@DATA = [ 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383 ]

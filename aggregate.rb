@@ -84,6 +84,14 @@ class Aggregate
   def std_dev
   end
 
+  # Combine two aggregates
+  #def +(b)
+  #  a = self
+  #  c = Aggregate.new
+
+  #  c.count = a.count + b.count
+  #end
+
   #Generate a pretty-printed ASCII representation of the histogram
   def to_s
     #Find the largest bucket and create an array of the rows we intend to print
