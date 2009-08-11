@@ -1,12 +1,34 @@
+# Implements aggregate statistics and maintains
+# configurable histogram for a set of given samples. Convenient for tracking
+# high throughput data.
 class Aggregate
-  attr_reader :mean, :count, :max, :min, :sum, :outliers_low, :outliers_high
+  #The current average of all samples
+  attr_reader :mean
+
+  #The current number of samples 
+  attr_reader :count
+  
+  #The maximum sample value
+  attr_reader :max
+  
+  #The minimum samples value
+  attr_reader :min
+  
+  #The sum of all samples
+  attr_reader :sum
+
+  #The number of samples falling below the lowest valued histogram bucket
+  attr_reader :outliers_low
+
+  #The number of samples falling above the highest valued histogram bucket
+  attr_reader :outliers_high
  
-  # By default maintain a logarithmic histogram
+  # The number of buckets in the binary logarithmic histogram (low => 2**0, high => 2**@@LOG_BUCKETS)
   @@LOG_BUCKETS = 128
 
-  #
-  ## Constructor
-  #
+  # Create a new Aggregate that maintains a binary logarithmic histogram
+  # by default. Specifying values for low, high, and width configures
+  # the aggregate to maintain a linear histogram with (high - low)/width buckets
   def initialize (low=nil, high=nil, width=nil)
     @count = 0
     @sum = 0.0
@@ -34,9 +56,7 @@ class Aggregate
     @buckets = Array.new(bucket_count, 0)
   end
 
-  #
-  ## The aggregation operator
-  #
+  # Include a sample in the aggregate
   def << data
 
     # Update min/max
@@ -65,8 +85,8 @@ class Aggregate
   def std_dev
   end
 
+  #Generate a pretty-printed ASCII representation of the histogram
   def to_s
-
     #Find the largest bucket and create an array of the rows we intend to print
     max_count = 0
     disp_buckets = Array.new
@@ -118,14 +138,17 @@ class Aggregate
     #Put the pieces together
     "\n" + header + "\n" + histogram 
   end
-  
-  #Histogram data can also be accessed through iterators
+ 
+  #Iterate through each bucket in the histogram regardless of 
+  #its contents 
   def each
     @buckets.each_with_index do |count, index|
       yield(to_bucket(index), count)
     end
   end
 
+  #Iterate through only the buckets in the histogram that contain
+  #samples
   def each_nonzero
     @buckets.each_with_index do |count, index|
       yield(to_bucket(index), count) if count != 0
