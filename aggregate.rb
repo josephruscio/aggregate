@@ -63,10 +63,9 @@ class Aggregate
     if 0 == @count
       @min = data
       @max = data
-    elsif data > @max
-      @max = data
-    elsif data < @min
-      @min = data
+    else
+      @max = [data, @max].max
+      @min = [data, @min].min
     end
 
     # Update the running info
