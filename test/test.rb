@@ -99,14 +99,30 @@ class SimpleStatsTest < Test::Unit::TestCase
   end
 end
 
-=begin
 class LinearHistogramTest < Test::Unit::TestCase
   def setup
-    @stats = Stats.new
+    @stats = Aggregate.new(0, 32768, 1024)
 
     @@DATA.each do |x|
       @stats << x
     end
   end
+
+  #XXX: Update test_bucket_contents() if you muck with @@DATA
+  @@DATA = [ 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383 ]
+  def test_bucket_contents
+    #XXX: This is the only test so far that cares about the actual contents
+    # of @@DATA, so if you update that array ... update this method too
+    expected_buckets  = [0, 1024,  15360, 16384]
+    expected_counts =   [4, 2,     1,     2]
+
+    i = 0
+    @stats.each_nonzero do |bucket, count|
+      assert_equal expected_buckets[i], bucket
+      assert_equal expected_counts[i],  count 
+      # Increment for the next test
+      i += 1
+    end
+  end
+
 end
-=end

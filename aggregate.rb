@@ -37,8 +37,7 @@ class Aggregate
     @outliers_high = 0
 
     # If the user asks we maintain a linear histogram
-    # STILL UNDER TEST/DEV
-    if false #(nil != low && nil != high && nil != width)
+    if (nil != low && nil != high && nil != width)
       # This is a linear histogram
       if high < low
 	raise ArgumentError, "High bucket must be > Low bucket"
@@ -189,26 +188,24 @@ class Aggregate
 
   def to_bucket(index)
     if linear?
-      return @low + ( (index + 1) * @width)
+      return @low + (index * @width)
     else
       return 2**(index)
     end
   end
     
-  def right_bucket?(index, data)
+  def right_bucket? index, data
+
+    # check invariant
+    raise unless linear?
+
     bucket = to_bucket(index)
 
-    # Edge case
-    if 0 == index
-      prev_bucket = @low
-    else
-      prev_bucket = to_bucket(index - 1)
-    end
-
-    #It's the right bucket if data falls between prev_bucket and bucket
-    prev_bucket <= data && data <= bucket
+    #It's the right bucket if data falls between bucket and next bucket
+    bucket <= data && data < bucket + @width
   end
 
+=begin
   def find_bucket(lower, upper, target)
     #Classic binary search
     return upper if right_bucket?(upper, target)
@@ -223,20 +220,24 @@ class Aggregate
       return find_bucket(middle, upper, target)
     end
   end
+=end
 
   # A data point is added to the bucket[n] where the data point
   # is less than the value represented by bucket[n], but greater
   # than the value represented by bucket[n+1]
   def to_index (data)
 
-    if linear?
-      find_bucket(0, bucket_count-1, data)
-    else
-      #log2 returns the bucket above the one we want,
-      #and we need to also subtract for 0 indexing of Array
-      log2(data).to_i
-    end
+    # basic case is simple
+    return log2(data).to_i if !linear?
 
+    # Search for the right bucket in the linear case
+    @buckets.each_with_index do |count, idx|
+      return idx if right_bucket?(idx, data)
+    end
+    #find_bucket(0, bucket_count-1, data)
+
+    #Should not get here
+    raise "#{data}"
   end
 
   # log2(x) returns j, | i = j-1 and 2**i <= data < 2**j
