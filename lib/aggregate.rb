@@ -38,9 +38,14 @@ class Aggregate
 
     # If the user asks we maintain a linear histogram
     if (nil != low && nil != high && nil != width)
-      # This is a linear histogram
-      if high < low
+
+      #Validate linear specification
+      if high <= low
 	raise ArgumentError, "High bucket must be > Low bucket"
+      end
+
+      if high - low < width
+        raise ArgumentError, "Histogram width must be <= histogram range"
       end
 
       @low = low

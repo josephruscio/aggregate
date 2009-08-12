@@ -108,6 +108,12 @@ class LinearHistogramTest < Test::Unit::TestCase
     end
   end
 
+  def test_validation
+    assert_raise(ArgumentError) {bad_stats = Aggregate.new(32,32,4)}
+    assert_raise(ArgumentError) {bad_stats = Aggregate.new(32,16,4)}
+    assert_raise(ArgumentError) {bad_stats = Aggregate.new(16,32,17)}
+  end
+
   #XXX: Update test_bucket_contents() if you muck with @@DATA
   @@DATA = [ 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383 ]
   def test_bucket_contents
