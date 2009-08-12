@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'aggregate'
+require 'lib/aggregate'
 
 class SimpleStatsTest < Test::Unit::TestCase
 
