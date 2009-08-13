@@ -94,8 +94,16 @@ class SimpleStatsTest < Test::Unit::TestCase
   end
 
   def test_outlier
+    assert_equal 0, @stats.outliers_low
+    assert_equal 0, @stats.outliers_high
+    
     @stats << -1
+    @stats << -2
     @stats << 2**129
+
+    assert_equal 2, @stats.outliers_low
+    assert_equal 1, @stats.outliers_high
+
   end
 end
 
