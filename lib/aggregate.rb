@@ -109,16 +109,18 @@ class Aggregate
     #Find the largest bucket and create an array of the rows we intend to print
     disp_buckets = Array.new
     max_count = 0
+    total = 0
     @buckets.each_with_index do |count, idx|
       next if 0 == count
       max_count = [max_count, count].max
       disp_buckets << [idx, to_bucket(idx), count]
+      total += count
     end
 
     #Figure out how wide the value and count columns need to be based on their
     #largest respective numbers
     value_width = [disp_buckets.last[1].to_s.length, "value".length].max
-    count_width = @count.to_s.length
+    count_width = total.to_s.length
     max_bar_width  = columns - (value_width + " |".length + "| ".length + count_width)
 
     #Determine the value of a '@'
@@ -163,7 +165,7 @@ class Aggregate
     histogram << " |"
     max_bar_width.times {histogram << "-"}
     histogram << "| "
-    histogram << sprintf("%#{count_width}d\n", @count)
+    histogram << sprintf("%#{count_width}d\n", total)
 
     #Put the pieces together
     "\n" + histogram 
