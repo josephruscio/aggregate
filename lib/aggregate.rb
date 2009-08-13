@@ -172,9 +172,6 @@ class Aggregate
     max_bar_width.times {histogram << "-"}
     histogram << "| "
     histogram << sprintf("%#{count_width}d\n", total)
-
-    #Put the pieces together
-    "\n" + histogram 
   end
  
   #Iterate through each bucket in the histogram regardless of 
