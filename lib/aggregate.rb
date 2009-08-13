@@ -120,7 +120,7 @@ class Aggregate
     #Figure out how wide the value and count columns need to be based on their
     #largest respective numbers
     value_width = [disp_buckets.last[1].to_s.length, "value".length].max
-    count_width = total.to_s.length
+    count_width = [total.to_s.length, "count".length].max
     max_bar_width  = columns - (value_width + " |".length + "| ".length + count_width)
 
     #Determine the value of a '@'
