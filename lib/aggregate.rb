@@ -97,38 +97,49 @@ class Aggregate
   #end
 
   #Generate a pretty-printed ASCII representation of the histogram
-  def to_s
+  def to_s(columns=nil)
+
+    #default to an 80 column terminal, don't support < 80 for now
+    if nil == columns
+      columns = 80
+    else
+      raise ArgumentError if columns < 80
+    end
+
     #Find the largest bucket and create an array of the rows we intend to print
-    max_count = 0
     disp_buckets = Array.new
+    max_count = 0
     @buckets.each_with_index do |count, idx|
       next if 0 == count
-      max_count = count if max_count < count
+      max_count = [max_count, count].max
       disp_buckets << [idx, to_bucket(idx), count]
     end
 
     #Figure out how wide the value and count columns need to be based on their
     #largest respective numbers
     value_width = [disp_buckets.last[1].to_s.length, "value".length].max
-    count_width = [max_count.to_s.length, "count".length].max
-    max_bar_width  = 80 - (value_width + " |".length + " ".length + count_width)
-
-    #print the header
-    header = sprintf("%#{value_width}s", "value")
-    header += " |"
-    max_bar_width.times { header += "-"}
-    header += " count"
+    count_width = @count.to_s.length
+    max_bar_width  = columns - (value_width + " |".length + "| ".length + count_width)
 
     #Determine the value of a '@'
     weight = [max_count.to_f/max_bar_width.to_f, 1.0].max
 
-    #Loop through each bucket to be displayed and output the correct number
-    histogram = ""
-    prev_index = disp_buckets[0][0] - 1
-    disp_buckets.each do |x|
+    #format the header
+    histogram = sprintf("%#{value_width}s |", "value")
+    max_bar_width.times { histogram << "-"}
+    histogram << sprintf("| %#{count_width}s\n", "count")
 
+    # We denote empty buckets with a '~'
+    def skip_row(value_width)
+      sprintf("%#{value_width}s ~\n", " ")
+    end
+
+    #Loop through each bucket to be displayed and output the correct number
+    prev_index = disp_buckets[0][0] - 1
+    
+    disp_buckets.each do |x|
       #Denote skipped empty buckets with a ~
-      histogram += "      ~\n" unless prev_index == x[0] - 1
+      histogram << skip_row(value_width) unless prev_index == x[0] - 1
       prev_index = x[0]
 
       #Add the value
@@ -140,14 +151,22 @@ class Aggregate
       (max_bar_width - bar_size).times { row += " " }
 
       #Add the count
-      row += sprintf(" %#{count_width}d\n", x[2])
+      row << sprintf("| %#{count_width}d\n", x[2])
 
       #Append the finished row onto the histogram
-      histogram += row
+      histogram << row
     end
 
+    #End the table
+    histogram << skip_row(value_width) if disp_buckets.last[0] != bucket_count-1
+    histogram << sprintf("%#{value_width}s", "Total")
+    histogram << " |"
+    max_bar_width.times {histogram << "-"}
+    histogram << "| "
+    histogram << sprintf("%#{count_width}d\n", @count)
+
     #Put the pieces together
-    "\n" + header + "\n" + histogram 
+    "\n" + histogram 
   end
  
   #Iterate through each bucket in the histogram regardless of 
