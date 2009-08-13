@@ -103,7 +103,10 @@ class SimpleStatsTest < Test::Unit::TestCase
 
     assert_equal 2, @stats.outliers_low
     assert_equal 1, @stats.outliers_high
+  end
 
+  def test_std_dev
+    @stats.std_dev
   end
 end
 

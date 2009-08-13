@@ -85,7 +85,9 @@ class Aggregate
     @sum / @count
   end
 
+  #Calculate the standard deviation
   def std_dev
+    Math.sqrt((@sum2.to_f - ((@sum.to_f * @sum.to_f)/@count.to_f)) / (@count.to_f - 1))
   end
 
   # Combine two aggregates
