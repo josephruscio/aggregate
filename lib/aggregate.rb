@@ -82,7 +82,7 @@ class Aggregate
   end
 
   def mean
-    @sum / self.count
+    @sum / @count
   end
 
   def std_dev
