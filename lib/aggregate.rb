@@ -119,17 +119,21 @@ class Aggregate
 
     #Figure out how wide the value and count columns need to be based on their
     #largest respective numbers
-    value_width = [disp_buckets.last[1].to_s.length, "value".length].max
-    count_width = [total.to_s.length, "count".length].max
+    value_str = "value"
+    count_str = "count"
+    total_str = "Total"
+    value_width = [disp_buckets.last[1].to_s.length, value_str.length].max
+    value_width = [value_width, total_str.length].max
+    count_width = [total.to_s.length, count_str.length].max
     max_bar_width  = columns - (value_width + " |".length + "| ".length + count_width)
 
     #Determine the value of a '@'
     weight = [max_count.to_f/max_bar_width.to_f, 1.0].max
 
     #format the header
-    histogram = sprintf("%#{value_width}s |", "value")
+    histogram = sprintf("%#{value_width}s |", value_str)
     max_bar_width.times { histogram << "-"}
-    histogram << sprintf("| %#{count_width}s\n", "count")
+    histogram << sprintf("| %#{count_width}s\n", count_str)
 
     # We denote empty buckets with a '~'
     def skip_row(value_width)
