@@ -1,3 +1,5 @@
+require 'rake'
+
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
