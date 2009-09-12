@@ -276,8 +276,9 @@ class Aggregate
   end
 
   # log2(x) returns j, | i = j-1 and 2**i <= data < 2**j
+  @@LOG2_DIVEDEND = Math.log(2)
   def log2( x )
-   Math.log(x) / Math.log(2)
+   Math.log(x) / @@LOG2_DIVEDEND
   end
 
 end
