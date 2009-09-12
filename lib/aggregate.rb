@@ -5,15 +5,15 @@ class Aggregate
   #The current average of all samples
   attr_reader :mean
 
-  #The current number of samples 
+  #The current number of samples
   attr_reader :count
-  
+
   #The maximum sample value
   attr_reader :max
-  
+
   #The minimum samples value
   attr_reader :min
-  
+
   #The sum of all samples
   attr_reader :sum
 
@@ -22,7 +22,7 @@ class Aggregate
 
   #The number of samples falling above the highest valued histogram bucket
   attr_reader :outliers_high
- 
+
   # The number of buckets in the binary logarithmic histogram (low => 2**0, high => 2**@@LOG_BUCKETS)
   @@LOG_BUCKETS = 128
 
@@ -73,7 +73,7 @@ class Aggregate
     end
 
     # Update the running info
-    @count += 1 
+    @count += 1
     @sum += data
     @sum2 += (data * data)
 
@@ -144,7 +144,7 @@ class Aggregate
 
     #Loop through each bucket to be displayed and output the correct number
     prev_index = disp_buckets[0][0] - 1
-    
+
     disp_buckets.each do |x|
       #Denote skipped empty buckets with a ~
       histogram << skip_row(value_width) unless prev_index == x[0] - 1
@@ -173,9 +173,9 @@ class Aggregate
     histogram << "| "
     histogram << sprintf("%#{count_width}d\n", total)
   end
- 
-  #Iterate through each bucket in the histogram regardless of 
-  #its contents 
+
+  #Iterate through each bucket in the histogram regardless of
+  #its contents
   def each
     @buckets.each_with_index do |count, index|
       yield(to_bucket(index), count)
@@ -222,7 +222,7 @@ class Aggregate
       return 2**(index)
     end
   end
-    
+
   def right_bucket? index, data
 
     # check invariant
@@ -273,5 +273,5 @@ class Aggregate
   def log2( x )
    Math.log(x) / Math.log(2)
   end
- 
+
 end
