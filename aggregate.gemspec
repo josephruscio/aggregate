@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{aggregate}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joseph Ruscio"]
-  s.date = %q{2009-08-16}
+  s.date = %q{2009-09-12}
   s.description = %q{Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support}
   s.email = %q{jruscio@gmail.com}
   s.extra_rdoc_files = [
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/josephruscio/aggregate}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.3}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support}
   s.test_files = [
     "test/ts_aggregate.rb"
