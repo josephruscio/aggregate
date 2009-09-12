@@ -48,6 +48,10 @@ class Aggregate
         raise ArgumentError, "Histogram width must be <= histogram range"
       end
 
+      if 0 != (high - low).modulo(width)
+	raise ArgumentError, "Histogram range (high - low) must be a multiple of width"
+      end
+
       @low = low
       @high = high
       @width = width

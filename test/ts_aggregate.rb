@@ -120,9 +120,18 @@ class LinearHistogramTest < Test::Unit::TestCase
   end
 
   def test_validation
+
+    # Range cannot be 0
     assert_raise(ArgumentError) {bad_stats = Aggregate.new(32,32,4)}
+
+    # Range cannot be negative
     assert_raise(ArgumentError) {bad_stats = Aggregate.new(32,16,4)}
+
+    # Range cannot be < single bucket
     assert_raise(ArgumentError) {bad_stats = Aggregate.new(16,32,17)}
+
+    # Range % width must equal 0 (for now)
+    assert_raise(ArgumentError) {bad_stats = Aggregate.new(1,16384,1024)}
   end
 
   #XXX: Update test_bucket_contents() if you muck with @@DATA
