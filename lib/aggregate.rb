@@ -36,7 +36,9 @@ class Aggregate
     @outliers_low = 0
     @outliers_high = 0
 
-    # If the user asks we maintain a linear histogram
+    # If the user asks we maintain a linear histogram where
+    # values in the range [low, high) are bucketed in multiples
+    # of width
     if (nil != low && nil != high && nil != width)
 
       #Validate linear specification
@@ -204,7 +206,7 @@ class Aggregate
 
     if data < @low
       @outliers_low += 1
-    elsif data > @high
+    elsif data >= @high
       @outliers_high += 1
     else
       return false

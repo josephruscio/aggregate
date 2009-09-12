@@ -135,17 +135,18 @@ class LinearHistogramTest < Test::Unit::TestCase
   end
 
   #XXX: Update test_bucket_contents() if you muck with @@DATA
-  @@DATA = [ 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383 ]
+  # 32768 is an outlier
+  @@DATA = [ 0, 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383, 32768]
   def test_bucket_contents
     #XXX: This is the only test so far that cares about the actual contents
     # of @@DATA, so if you update that array ... update this method too
     expected_buckets  = [0, 1024,  15360, 16384]
-    expected_counts =   [4, 2,     1,     2]
+    expected_counts =   [5, 2,     1,     2]
 
     i = 0
     @stats.each_nonzero do |bucket, count|
       assert_equal expected_buckets[i], bucket
-      assert_equal expected_counts[i],  count 
+      assert_equal expected_counts[i],  count
       # Increment for the next test
       i += 1
     end
