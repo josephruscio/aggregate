@@ -125,6 +125,9 @@ class Aggregate
       total += count
     end
 
+    #XXX: Better to print just header --> footer
+    return "Empty histogram" if 0 == disp_buckets.length
+
     #Figure out how wide the value and count columns need to be based on their
     #largest respective numbers
     value_str = "value"

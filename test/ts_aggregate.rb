@@ -73,7 +73,7 @@ class SimpleStatsTest < Test::Unit::TestCase
 =end
 
   #XXX: Update test_bucket_contents() if you muck with @@DATA
-  @@DATA = [ 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383 ]
+  @@DATA = [ 1, 5, 4, 6, 1028, 1972, 16384, 16385, 16383]
   def test_bucket_contents
     #XXX: This is the only test so far that cares about the actual contents
     # of @@DATA, so if you update that array ... update this method too
@@ -83,7 +83,7 @@ class SimpleStatsTest < Test::Unit::TestCase
     i = 0
     @stats.each_nonzero do |bucket, count|
       assert_equal expected_buckets[i], bucket
-      assert_equal expected_counts[i],  count 
+      assert_equal expected_counts[i],  count
       # Increment for the next test
       i += 1
     end
@@ -96,12 +96,19 @@ class SimpleStatsTest < Test::Unit::TestCase
   def test_outlier
     assert_equal 0, @stats.outliers_low
     assert_equal 0, @stats.outliers_high
-    
+
     @stats << -1
     @stats << -2
-    @stats << 2**129
+    @stats << 0
 
-    assert_equal 2, @stats.outliers_low
+    @stats << 2**128
+
+    # This should be the last value in the last bucket, but Ruby's native
+    # floats are not precise enough. Somewhere past 2^32 the log(x)/log(2)
+    # breaks down. So it shows up as 128 (outlier) instead of 127
+    #@stats << (2**128) - 1
+
+    assert_equal 3, @stats.outliers_low
     assert_equal 1, @stats.outliers_high
   end
 
