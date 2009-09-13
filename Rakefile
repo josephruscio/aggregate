@@ -5,7 +5,7 @@ begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "aggregate"
     gemspec.summary = "Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support"
-    gemspec.description = "Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support"
+    gemspec.description = "Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support. For a detailed README see: http://github.com/josephruscio/aggregate"
     gemspec.email = "jruscio@gmail.com"
     gemspec.homepage = "http://github.com/josephruscio/aggregate"
     gemspec.authors = ["Joseph Ruscio"]

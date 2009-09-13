@@ -9,16 +9,17 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joseph Ruscio"]
-  s.date = %q{2009-09-12}
-  s.description = %q{Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support}
+  s.date = %q{2009-09-13}
+  s.description = %q{Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support. For a detailed README see: http://github.com/josephruscio/aggregate}
   s.email = %q{jruscio@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
-     "README"
+     "README.textile"
   ]
   s.files = [
-    "LICENSE",
-     "README",
+    ".gitignore",
+     "LICENSE",
+     "README.textile",
      "Rakefile",
      "VERSION",
      "aggregate.gemspec",
