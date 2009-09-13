@@ -67,7 +67,7 @@ configure a linear histogram to examine it in closer detail.
 h3. Linear Histograms
 
 Linear histograms are specified with the three values low, high, and width.
-Low and high specifiy a range [low, high) of values included in the
+Low and high specify a range [low, high) of values included in the
 histogram (all others are outliers). Width specifies the number of
 values represented by each bucket and therefore the number of
 buckets i.e. granularity of the histogram. The histogram range
