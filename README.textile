@@ -11,8 +11,8 @@ inspired by the Aggregate support in "SystemTap.":http://sourceware.org/systemta
 
 h2. Getting Started
 
-Aggregates are easy to instantiate, populate with sample data, and examine
-statistics:
+Aggregates are easy to instantiate, populate with sample data, and then
+inspect for common aggregate statistics:
 
 <pre><code>
 #After instantiation use the << operator to add a sample to the aggregate:
