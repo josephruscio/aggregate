@@ -198,6 +198,11 @@ Total |------------------------------------------------------------------| 65532
 We can see from these histograms that Ruby's rand function does a relatively good
 job of distributing returned values in the requested range.
 
+h2. Examples
+
+Here's an example of a "handy timing benchmark":http://gist.github.com/187669
+implemented with aggregate.
+
 h2. NOTES
 
 Ruby doesn't have a log2 function built into Math, so we approximate with
