@@ -2,9 +2,6 @@
 # configurable histogram for a set of given samples. Convenient for tracking
 # high throughput data.
 class Aggregate
-  #The current average of all samples
-  attr_reader :mean
-
   #The current number of samples
   attr_reader :count
 
@@ -88,6 +85,7 @@ class Aggregate
     @buckets[to_index(data)] += 1 unless outlier?(data)
   end
 
+  #The current average of all samples
   def mean
     @sum / @count
   end
