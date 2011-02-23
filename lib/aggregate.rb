@@ -59,6 +59,7 @@ class Aggregate
       @width = width
     else
       @low = 1
+      @width = nil
       @high = to_bucket(@@LOG_BUCKETS - 1)
     end
 
