@@ -1,7 +1,7 @@
-require 'test/unit'
-require 'lib/aggregate'
+require 'minitest/autorun'
+require_relative '../lib/aggregate'
 
-class SimpleStatsTest < Test::Unit::TestCase
+class SimpleStatsTest < MiniTest::Test
 
   def setup
     @stats = Aggregate.new
@@ -50,7 +50,7 @@ class SimpleStatsTest < Test::Unit::TestCase
     total_bucket_sum = 0
     @stats.each_nonzero do |bucket, count|
       assert bucket > prev_bucket
-      assert_not_equal count, 0
+      refute_equal count, 0
 
       total_bucket_sum += count
     end
@@ -117,7 +117,7 @@ class SimpleStatsTest < Test::Unit::TestCase
   end
 end
 
-class LinearHistogramTest < Test::Unit::TestCase
+class LinearHistogramTest < MiniTest::Test
   def setup
     @stats = Aggregate.new(0, 32768, 1024)
 
@@ -129,16 +129,16 @@ class LinearHistogramTest < Test::Unit::TestCase
   def test_validation
 
     # Range cannot be 0
-    assert_raise(ArgumentError) {bad_stats = Aggregate.new(32,32,4)}
+    assert_raises(ArgumentError) {bad_stats = Aggregate.new(32,32,4)}
 
     # Range cannot be negative
-    assert_raise(ArgumentError) {bad_stats = Aggregate.new(32,16,4)}
+    assert_raises(ArgumentError) {bad_stats = Aggregate.new(32,16,4)}
 
     # Range cannot be < single bucket
-    assert_raise(ArgumentError) {bad_stats = Aggregate.new(16,32,17)}
+    assert_raises(ArgumentError) {bad_stats = Aggregate.new(16,32,17)}
 
     # Range % width must equal 0 (for now)
-    assert_raise(ArgumentError) {bad_stats = Aggregate.new(1,16384,1024)}
+    assert_raises(ArgumentError) {bad_stats = Aggregate.new(1,16384,1024)}
   end
 
   #XXX: Update test_bucket_contents() if you muck with @@DATA
