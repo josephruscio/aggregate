@@ -104,7 +104,8 @@ class Aggregate
   #end
 
   #Generate a pretty-printed ASCII representation of the histogram
-  def to_s(columns=nil)
+  def to_s(columns=nil, value_formatter=nil)
+    value_formatter ||= :to_s.to_proc
 
     #default to an 80 column terminal, don't support < 80 for now
     if nil == columns
@@ -120,7 +121,7 @@ class Aggregate
     @buckets.each_with_index do |count, idx|
       next if 0 == count
       max_count = [max_count, count].max
-      disp_buckets << [idx, to_bucket(idx), count]
+      disp_buckets << [idx, value_formatter.call(to_bucket(idx)), count]
       total += count
     end
 
@@ -159,7 +160,7 @@ class Aggregate
       prev_index = x[0]
 
       #Add the value
-      row = sprintf("%#{value_width}d |", x[1])
+      row = sprintf("%#{value_width}s |", x[1])
 
       #Add the bar
       bar_size = (x[2]/weight).to_i
