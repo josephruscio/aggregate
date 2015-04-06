@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../lib/aggregate'
+require File.expand_path('../../lib/aggregate', __FILE__)
 
 class SimpleStatsTest < MiniTest::Test
 
