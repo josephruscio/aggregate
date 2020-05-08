@@ -284,3 +284,5 @@ class Aggregate
   end
 
 end
+
+require_relative 'aggregate/version'
