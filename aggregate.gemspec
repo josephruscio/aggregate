@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
     "LICENSE",
      "README.textile"
   ]
-  s.files = `git ls-files -z`.split("\x0")
+  s.files = Dir.glob("**/*")
   s.homepage = %q{http://github.com/josephruscio/aggregate}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
