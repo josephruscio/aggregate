@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
     "LICENSE",
      "README.textile"
   ]
-  s.files = Dir.glob("**/*")
+  s.files = Dir["{lib}/**/*.*", "LICENSE", "README.textile"]
   s.homepage = %q{http://github.com/josephruscio/aggregate}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
@@ -33,4 +33,3 @@ Gem::Specification.new do |s|
   else
   end
 end
-
