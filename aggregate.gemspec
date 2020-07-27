@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/josephruscio/aggregate}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.license = "MIT"
   s.summary = %q{Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support}
   s.test_files = [
     "test/ts_aggregate.rb"
