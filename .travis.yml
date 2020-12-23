@@ -1,3 +1,6 @@
+arch:
+  - amd64
+  - ppc64le
 language: ruby
 rvm:
   - 1.9.3
@@ -5,3 +8,11 @@ rvm:
   - 2.5
   - 2.6
   - 2.7
+matrix:
+ exclude:
+    - rvm: 1.9.3
+      arch: ppc64le
+    - rvm: 2.3
+      arch: ppc64le
+    - rvm: 2.5
+      arch: ppc64le
