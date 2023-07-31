@@ -38,7 +38,7 @@ class SimpleStatsTest < MiniTest::Test
     i = 0
     @stats.each do |bucket, count|
       assert_equal 2**i, bucket
-      
+
       total_bucket_sum += count
       i += 1
     end
@@ -129,16 +129,16 @@ class LinearHistogramTest < MiniTest::Test
   def test_validation
 
     # Range cannot be 0
-    assert_raises(ArgumentError) {bad_stats = Aggregate.new(32,32,4)}
+    assert_raises(ArgumentError) { Aggregate.new(32,32,4) }
 
     # Range cannot be negative
-    assert_raises(ArgumentError) {bad_stats = Aggregate.new(32,16,4)}
+    assert_raises(ArgumentError) { Aggregate.new(32,16,4) }
 
     # Range cannot be < single bucket
-    assert_raises(ArgumentError) {bad_stats = Aggregate.new(16,32,17)}
+    assert_raises(ArgumentError) { Aggregate.new(16,32,17) }
 
     # Range % width must equal 0 (for now)
-    assert_raises(ArgumentError) {bad_stats = Aggregate.new(1,16384,1024)}
+    assert_raises(ArgumentError) { Aggregate.new(1,16384,1024) }
   end
 
   #XXX: Update test_bucket_contents() if you muck with @@DATA
