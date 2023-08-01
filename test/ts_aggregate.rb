@@ -93,6 +93,14 @@ class SimpleStatsTest < MiniTest::Test
     puts @stats.to_s
   end
 
+  def test_histogram_times_2
+    puts @stats.to_s(80, method(:times_2))
+  end
+
+  def times_2(value)
+    value * 2
+  end
+
   def test_outlier
     assert_equal 0, @stats.outliers_low
     assert_equal 0, @stats.outliers_high
