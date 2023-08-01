@@ -26,7 +26,7 @@ class Aggregate
   # Create a new Aggregate that maintains a binary logarithmic histogram
   # by default. Specifying values for low, high, and width configures
   # the aggregate to maintain a linear histogram with (high - low)/width buckets
-  def initialize (low=nil, high=nil, width=nil)
+  def initialize(low=nil, high=nil, width=nil)
     @count = 0
     @sum = 0.0
     @sum2 = 0.0
@@ -204,7 +204,7 @@ class Aggregate
     nil != @width
   end
 
-  def outlier? (data)
+  def outlier?(data)
 
     if data < @low
       @outliers_low += 1
@@ -231,7 +231,7 @@ class Aggregate
     end
   end
 
-  def right_bucket? index, data
+  def right_bucket?(index, data)
 
     # check invariant
     raise unless linear?
@@ -262,7 +262,7 @@ class Aggregate
   # A data point is added to the bucket[n] where the data point
   # is less than the value represented by bucket[n], but greater
   # than the value represented by bucket[n+1]
-  def to_index (data)
+  def to_index(data)
 
     # basic case is simple
     return log2(data).to_i if !linear?
